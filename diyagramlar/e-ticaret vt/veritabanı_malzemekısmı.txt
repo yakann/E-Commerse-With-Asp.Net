@@ -1,0 +1,45 @@
+CREATE TABLE [arac_bilgisi] (
+	arac_id integer NOT NULL,
+	arac_adi varchar(50) NOT NULL,
+	arac_tipi varchar(50) NOT NULL,
+	boyutu float NOT NULL,
+  CONSTRAINT [PK_ARAC_BILGISI] PRIMARY KEY CLUSTERED
+  (
+  [arac_id] ASC
+  ) WITH (IGNORE_DUP_KEY = OFF)
+
+)
+GO
+CREATE TABLE [arac_stok] (
+	stok_no integer NOT NULL,
+	arac_id integer NOT NULL,
+	toplam_stok integer(3) NOT NULL,
+  CONSTRAINT [PK_ARAC_STOK] PRIMARY KEY CLUSTERED
+  (
+  [stok_no] ASC
+  ) WITH (IGNORE_DUP_KEY = OFF)
+
+)
+GO
+CREATE TABLE [arac_fiyat] (
+	arac_adi varchar(50) NOT NULL,
+	birim_fiyat integer NOT NULL,
+  CONSTRAINT [PK_ARAC_FIYAT] PRIMARY KEY CLUSTERED
+  (
+  [arac_adi] ASC
+  ) WITH (IGNORE_DUP_KEY = OFF)
+
+)
+GO
+ALTER TABLE [arac_bilgisi] WITH CHECK ADD CONSTRAINT [arac_bilgisi_fk0] FOREIGN KEY ([arac_adi]) REFERENCES [arac_fiyat]([arac_adi])
+ON UPDATE CASCADE
+GO
+ALTER TABLE [arac_bilgisi] CHECK CONSTRAINT [arac_bilgisi_fk0]
+GO
+
+ALTER TABLE [arac_stok] WITH CHECK ADD CONSTRAINT [arac_stok_fk0] FOREIGN KEY ([arac_id]) REFERENCES [arac_bilgisi]([arac_id])
+ON UPDATE CASCADE
+GO
+ALTER TABLE [arac_stok] CHECK CONSTRAINT [arac_stok_fk0]
+GO
+
